@@ -170,19 +170,19 @@ body {
   }
 
   .bg-primary-subtler {
-    background-color: shade-color($primary, 90%)
+    background-color: shade-color($primary, 90%);
   }
   
   .bg-secondary-subtler {
-    background-color: shade-color($secondary, 90%)
+    background-color: shade-color($secondary, 90%);
   }
   
   .border-primary-subtler {
-    border-color: shade-color($primary, 70%)
+    border-color: shade-color($primary, 70%);
   }
   
   .border-secondary-subtler {
-    border-color: shade-color($secondary, 70%)
+    border-color: shade-color($secondary, 70%);
   }
 
   .bg-body-tertiary {
@@ -202,5 +202,38 @@ body {
 
   .text-body-secondary {
     color: tint-color($body-secondary-color, 50%) !important;
+  }
+
+  @media (max-width: 768px) {
+    .text-container {
+      text-align: center;
+    }
+    .only-mobile {
+      display: block;
+    }
+    .m-bg-primary-subtle {
+      background-color: shade-color($secondary, 80%) !important;
+    }
+    .m-bg-secondary-subtle {
+      background-color: shade-color($primary, 80%) !important;
+    }
+    .m-border-primary-subtle {
+      border-color: shade-color($secondary, 60%) !important;
+    }
+    .m-border-secondary-subtle {
+      border-color: shade-color($primary, 60%) !important;
+    }
+    .bg-primary-subtler {
+      background-color: shade-color($secondary, 90%);
+    }
+    .bg-secondary-subtler {
+      background-color: shade-color($primary, 90%);
+    }
+    .border-primary-subtler {
+      border-color: shade-color($secondary, 70%);
+    }
+    .border-secondary-subtler {
+      border-color: shade-color($primary, 70%);
+    }
   }
 }
