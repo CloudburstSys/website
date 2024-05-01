@@ -36,6 +36,7 @@ jobs:
       - name: Build CSS
         run: |
           npm install -g sass
+          npm install
           sass assets/css/index.scss assets/css/index.css
       - name: Setup Pages
         uses: actions/configure-pages@v5
