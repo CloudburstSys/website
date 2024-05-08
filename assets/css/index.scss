@@ -237,3 +237,8 @@ body {
     }
   }
 }
+
+// Disable yesscript elements with CSS to later be enabled by JS
+.yesscript {
+  display: none;
+}

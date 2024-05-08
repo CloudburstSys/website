@@ -46,10 +46,26 @@
         <div class="col-md-10 text-container align-self-center">
           <h3>Cloudburst (Leah)</h3>
           <h5>she/her</h5>
+          <div class="yesscript"><h6>My 12am is your <time class="fw-bold" datetime="23:00" format="time_12">... Something broke.</time></h6></div>
           <div>
             <span data-bs-toggle="tooltip" data-bs-html="true" title="<b>Transfeminine</b><br>An umbrella term that refers to transgender people who identify with femininity to a greater extent than other genders." class="tooltip-nohelp" style="position: relative; top:1px; cursor: pointer;"><span><img src="assets/images/flags/transfeminine.png" alt="flag" class="flag bg-primary-subtle border-primary-subtle rounded-3 border border-2 shadow-sm"/></span></span>
             <span data-bs-toggle="tooltip" data-bs-html="true" title="<b>Bisexual</b><br>Attraction towards two or more genders." class="tooltip-nohelp" style="position: relative; top:1px; cursor: pointer;"><span><img src="assets/images/flags/bisexual.png" alt="flag" class="flag bg-primary-subtle border-primary-subtle rounded-3 border border-3 shadow-sm"/></span></span>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="container p-3"></div>
+    <div class="container">
+      <div class="border-3 shadow-sm rounded-3 bg-warning-subtle border-warning-subtle row p-2 d-flex">
+        <div class="text-container">
+        <h3>I am<show-during end="2024-05-22T03:00:00+01:00"> going</show-during> on a break<show-during end="2024-05-22T03:00:00+01:00"> soon</show-during>!</h3>
+        <h6>By the way, the times here are synced to your timezone!</h6>
+        <noscript>
+          <h6>... If you had JavaScript enabled, but since you don't they're in UTC.</h6>
+        </noscript>
+        Between the <time datetime="2024-05-22T03:00:00+01:00" format="full_12">22nd of May 2024 at 2AM UTC</time> and <time datetime="2024-05-29T22:00:00+01:00" format="full_12">29th of May 2024 at 9PM UTC</time>, I am visiting some family members I don't get to see often!<br/>
+        This'll mean my activity will be lower than usual and it may take longer to reach me.<br/>
+        I will reply when I can, but do expect responses to take longer than usual, especially on the exact days listed above (not any days between) as I'll be travelling on those days.
         </div>
       </div>
     </div>
@@ -231,11 +247,13 @@
     </div>
   </footer>
   <script>
+    // Tooltips
     let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       return new bootstrap.Tooltip(tooltipTriggerEl);
     });
 
+    // Discord social hack
     document.getElementById("discord").addEventListener("click", discordCopy)
 
     function discordCopy(evt) {
@@ -243,6 +261,149 @@
       evt.preventDefault();
       alert("This is awkward... There's no such thing as a profile page on Discord, so I'm putting my username in your clipboard for you after you dismiss this alert. Hope that works for you!");
       navigator.clipboard.writeText("cloudburst");
+    }
+
+    // "yesscript" to show extra stuff that HAS to use javascript to function
+    for (let element of document.getElementsByClassName("yesscript")) {
+      element.style = "display: initial;";
+    }
+
+    // Put correct timezone in <time> tags for user
+    function getDateSuffix(date) {
+      if ((date.toString().endsWith("1")) && (!date.toString().endsWith("11"))) return "st";
+      if ((date.toString().endsWith("2")) && (!date.toString().endsWith("12"))) return "nd";
+      if ((date.toString().endsWith("2")) && (!date.toString().endsWith("13"))) return "rd";
+      return "th";
+    }
+
+    function getMonthName(month) {
+      return ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][month];
+    }
+
+
+    function getMonthMaxes(month) {
+      return [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month];
+    }
+
+    function fullDigits(number) {
+      if (number.toString().length == 1) return `0${number}`;
+      return `${number}`;
+    }
+
+    function timeTo12(hours, minutes) {
+      if (hours / 12 > 1) {
+        return `${hours-12}${minutes != 0 ? `:${fullDigits(minutes)}` : ``}pm`;
+      } else {
+        if (hours == 0) hours = 12;
+        return `${hours}${minutes != 0 ? `:${fullDigits(minutes)}` : ``}am`;
+      }
+    }
+
+    function dateObjectOnTimeOnly(time) {
+      let regex = /(\d{1,2}):(\d{2})(?::(\d{2}))?(am|pm)?/gi;
+
+      let expression = regex.exec(time);
+
+      if (expression != null) {
+        console.log(expression);
+        let hours = expression[1];
+        let minutes = expression[2];
+        let seconds = expression[3]; // Optional
+        let period = expression[4]; // Optional
+        let timezone = expression[5] != undefined ? { // Optional
+          mode: expression[6],
+          hours: expression[7],
+          minutes: expression[8] // Optional
+        } : undefined;
+
+        let date = new Date();
+        console.log(date);
+        date.setUTCHours(0);
+        date.setUTCMinutes(0);
+        date.setUTCSeconds(0);
+        date.setUTCMilliseconds(0);
+
+        if (period == undefined) {
+          // 24 hour
+          //let hoursTZ = hours + (timezone != null ? (timezone.mode == "+" ? timezone.hours : -timezone.hours) : 0);
+          //let minutesTZ = minutes + (timezone != null ? (timezone.mode == "+" ? timezone.minutes : -timezone.minutes) : 0);
+          date.setUTCHours(hours);
+          date.setUTCMinutes(minutes);
+          date.setUTCSeconds(seconds ?? 0);
+        } else {
+          if (period == "am") {
+            //let hoursTZ = hours + (timezone != null ? (timezone.mode == "+" ? timezone.hours : -timezone.hours) : 0);
+            //let minutesTZ = minutes + (timezone != null ? (timezone.mode == "+" ? timezone.minutes : -timezone.minutes) : 0);
+            date.setUTCHours(hours);
+            date.setUTCMinutes(minutes);
+            date.setUTCSeconds(seconds ?? 0);
+          } else {
+            //let hoursTZ = (hours + 12) + (timezone != null ? (timezone.mode == "+" ? timezone.hours : -timezone.hours) : 0);
+            //let minutesTZ = minutes + (timezone != null ? (timezone.mode == "+" ? timezone.minutes : -timezone.minutes) : 0);
+            date.setUTCHours(hours + 12);
+            date.setUTCMinutes(minutes);
+            date.setUTCSeconds(seconds ?? 0);
+          }
+        }
+
+        return date;
+      }
+      return null;
+    }
+    
+    for (let element of document.getElementsByTagName("time")) {
+      let time = new Date(element.attributes.getNamedItem("datetime").value);
+      let format = element.attributes.getNamedItem("format").value;
+      if (time == "Invalid Date") time = dateObjectOnTimeOnly(element.attributes.getNamedItem("datetime").value);
+
+      switch (format) {
+        case "time_12": // time only, 12 hour clock
+          element.innerText = ` ${timeTo12(time.getHours(), time.getMinutes())}`;
+          break;
+        case "time_24": // time only, 24 hour clock
+          element.innerText = ` ${fullDigits(time.getHours())}${minutes != 0 ? `:${fullDigits(minutes)}` : ``}`;
+          break;
+        case "date": // date only
+          element.innerText = `${time.getDate()}${getDateSuffix(time.getDate())} of ${getMonthName(time.getMonth())} ${time.getFullYear()}`;
+          break;
+        case "full_12": // both date and time, 12 hour clock
+          element.innerText = `${time.getDate()}${getDateSuffix(time.getDate())} of ${getMonthName(time.getMonth())} ${time.getFullYear()} at ${timeTo12(time.getHours(), time.getMinutes())}`;
+          break;
+        case "full_24": // both date and time, 24 hour clock
+          element.innerText = `${time.getDate()}${getDateSuffix(time.getDate())} of ${getMonthName(time.getMonth())} ${time.getFullYear()} at ${fullDigits(time.getHours())}${minutes != 0 ? `:${fullDigits(minutes)}` : ``}`;
+          break;
+        default:
+          console.warn(`Unknown time format: ${format} for ${element}`);
+      }
+    }
+
+    // "show-during" tag which only shows content past a specific timeframe, useful for pre-written announcements that aren't *that* sensntive.
+    for (let element of document.getElementsByTagName("show-during")) {
+      let startTime = element.attributes.getNamedItem("start") != null ? new Date(element.attributes.getNamedItem("start").value) : null;
+      let endTime = element.attributes.getNamedItem("end") != null ? new Date(element.attributes.getNamedItem("end").value) : null;
+
+      // starting off as invisible is easier
+      let visible = false;
+
+      if (startTime == null) {
+        // start off visible
+        visible = true;
+      }
+
+      if (startTime != null) {
+        if (Date.now() > startTime.getTime()) {
+          visible = true;
+        }
+      }
+
+      if (endTime != null) {
+        if (Date.now() > endTime.getTime()) {
+          visible = false;
+        }
+      }
+
+      if (visible) element.style = "display: initial;";
+      else element.style = "display: none";
     }
   </script>
 </body>
