@@ -144,6 +144,10 @@ body {
   .bg-secondary-subtle {
     background-color: shade-color($secondary, 80%) !important;
   }
+
+  .bg-warning-subtle {
+    background-color: shade-color($warning, 80%) !important;
+  }
   
   .border-primary-subtle {
     border-color: shade-color($primary, 60%) !important;
@@ -151,6 +155,10 @@ body {
   
   .border-secondary-subtle {
     border-color: shade-color($secondary, 60%) !important;
+  }
+
+  .border-warning-subtle {
+    background-color: shade-color($warning, 60%) !important;
   }
 
   .m-bg-primary-subtle {
