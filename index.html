@@ -54,21 +54,23 @@
         </div>
       </div>
     </div>
-    <div class="container p-3"></div>
-    <div class="container">
-      <div class="border-3 shadow-sm rounded-3 bg-warning-subtle border-warning-subtle row p-2 d-flex">
-        <div class="text-container">
-        <h3>I am<show-during end="2024-05-22T03:00:00+01:00"> going</show-during> on a break<show-during end="2024-05-22T03:00:00+01:00"> soon</show-during>!</h3>
-        <h6>By the way, the times here are synced to your timezone!</h6>
-        <noscript>
-          <h6>... If you had JavaScript enabled, but since you don't they're in UTC.</h6>
-        </noscript>
-        Between the <time datetime="2024-05-22T03:00:00+01:00" format="full_12">22nd of May 2024 at 2AM UTC</time> and the <time datetime="2024-05-29T22:00:00+01:00" format="full_12">29th of May 2024 at 9PM UTC</time>, I am visiting some family members I don't get to see often!<br/>
-        This'll mean my activity will be lower than usual and it may take longer to reach me.<br/>
-        I will reply when I can, but do expect responses to take longer than usual, especially on the exact days listed above (not any days between) as I'll be travelling on those days.
+    <show until="2024-05-29T22:00:00+01:00">
+      <div class="container p-3"></div>
+      <div class="container">
+        <div class="border-3 shadow-sm rounded-3 bg-warning-subtle border-warning-subtle row p-2 d-flex">
+          <div class="text-container">
+          <h3>I am<show until="2024-05-22T03:00:00+01:00"> going</show> on a break<show until="2024-05-22T03:00:00+01:00"> soon</show>!</h3>
+          <h6>By the way, the times here are synced to your timezone!</h6>
+          <noscript>
+            <h6>... If you had JavaScript enabled, but since you don't they're in UTC.</h6>
+          </noscript>
+          Between the <time datetime="2024-05-22T03:00:00+01:00" format="full_12">22nd of May 2024 at 2AM UTC</time> and the <time datetime="2024-05-29T22:00:00+01:00" format="full_12">29th of May 2024 at 9PM UTC</time>, I am visiting some family members I don't get to see often!<br/>
+          This'll mean my activity will be lower than usual and it may take longer to reach me.<br/>
+          I will reply when I can, but do expect responses to take longer than usual, especially on the exact days listed above (not any days between) as I'll be travelling on those days.
+          </div>
         </div>
       </div>
-    </div>
+    </show>
     <div class="container p-3"></div>
     <div class="container">
       <div class="row gx-5 row-gap-4">
@@ -378,9 +380,9 @@
     }
 
     // "show-during" tag which only shows content past a specific timeframe, useful for pre-written announcements that aren't *that* sensntive.
-    for (let element of document.getElementsByTagName("show-during")) {
-      let startTime = element.attributes.getNamedItem("start") != null ? new Date(element.attributes.getNamedItem("start").value) : null;
-      let endTime = element.attributes.getNamedItem("end") != null ? new Date(element.attributes.getNamedItem("end").value) : null;
+    for (let element of document.getElementsByTagName("show")) {
+      let startTime = element.attributes.getNamedItem("at") != null ? new Date(element.attributes.getNamedItem("at").value) : null;
+      let endTime = element.attributes.getNamedItem("until") != null ? new Date(element.attributes.getNamedItem("until").value) : null;
 
       // starting off as invisible is easier
       let visible = false;
