@@ -11983,6 +11983,9 @@ body {
   .bg-warning-subtle {
     background-color: rgb(51, 38.6, 1.4) !important;
   }
+  .bg-danger-subtle {
+    background-color: rgb(44, 10.6, 13.8) !important;
+  }
   .border-primary-subtle {
     border-color: #62363c !important;
   }
@@ -11991,6 +11994,9 @@ body {
   }
   .border-warning-subtle {
     background-color: rgb(102, 77.2, 2.8) !important;
+  }
+  .border-danger-subtle {
+    background-color: rgb(88, 21.2, 27.6) !important;
   }
   .m-bg-primary-subtle {
     background-color: #311b1e !important;
